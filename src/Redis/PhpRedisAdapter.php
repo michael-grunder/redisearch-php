@@ -20,8 +20,15 @@ class PhpRedisAdapter extends AbstractRedisClient
     {
         $this->redis = new Redis();
         $this->redis->connect($hostname, $port);
-        $this->redis->select($db);
-        $this->redis->auth($password);
+        
+        if ($db != 0) {
+            $this->redis->select($db);
+        }
+        
+        if ($password !== NULL && $password !== "") {
+            $this->redis->auth($password);
+        }
+
         return $this;
     }
 
